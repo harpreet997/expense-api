@@ -25,14 +25,30 @@ const addExpense = asyncWrapper(async (req, res) => {
             res.status(201).json({ expense, msg: "Expense Created successfully" })
         }
     } catch (error) {
-        console.log(error);
+        res.status(400).json({ msg: "Expense Already Exists" });
     }
 })
 
 
 const editExpense = asyncWrapper(async (req, res, next) => {
     const { id: expenseID } = req.params
-    const expense = await Expense.findOneAndUpdate({ _id: expenseID }, req.body, {
+    if (req.file) {
+        var expensebody = {
+            categoryName: req.body.categoryName,
+            expenseName: req.body.expenseName,
+            vendor: req.body.vendor,
+            Amount: req.body.Amount,
+            bill: `/uploads/${req.file.filename}`
+        }
+    } else {
+        var expensebody = {
+            categoryName: req.body.categoryName,
+            expenseName: req.body.expenseName,
+            vendor: req.body.vendor,
+            Amount: req.body.Amount,
+        }
+    }
+    const expense = await Expense.findOneAndUpdate({ _id: expenseID }, expensebody, {
         new: true,
         runValidators: true,
     })

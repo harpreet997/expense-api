@@ -19,6 +19,6 @@ const {getAllExpenses, addExpense, deleteExpense, editExpense} = require('../con
 
 expenseRoute.get('/', getAllExpenses);
 expenseRoute.post('/', upload.single('bill'), addExpense);
-expenseRoute.patch('/:id', editExpense);
+expenseRoute.patch('/:id', upload.single('bill'), editExpense);
 expenseRoute.delete('/:id', deleteExpense)
 module.exports = expenseRoute;
