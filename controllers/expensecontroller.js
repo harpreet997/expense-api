@@ -3,14 +3,8 @@ const Expense = require('../models/expensemodal');
 const asyncWrapper = require('../middleware/async')
 
 const getAllExpenses = asyncWrapper(async (req, res) => {
-    const authToken = req.headers.authorization;
-    if (!authToken) {
-        res.status(401).json({ msg: 'Unauthorize user' })
-    }
-    else {
-        const Expenses = await Expense.find({}).sort({createdAt: -1})
-        res.status(200).json({ Expenses })
-    }
+    const Expenses = await Expense.find({}).sort({ createdAt: -1 })
+    res.status(200).json({ Expenses })
 })
 
 const addExpense = asyncWrapper(async (req, res) => {
