@@ -66,7 +66,7 @@ const deleteExpense = asyncWrapper(async (req, res) => {
     const expense = await Expense.findOneAndDelete({ _id: expenseID })
     try {
         if (!expense) {
-            res.status(400).json({ msg: `No batch found with id: ${expenseID}` })
+            res.status(400).json({ msg: `No Expense found with id: ${expenseID}` })
         }
         else {
             res.status(200).json({ msg: "Expense Deleted Successfully" })
